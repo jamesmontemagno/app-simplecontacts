@@ -1,0 +1,84 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:d="http://xamarin.com/schemas/2014/forms/design"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:pancake="clr-namespace:Xamarin.Forms.PancakeView;assembly=Xamarin.Forms.PancakeView"
+             xmlns:local="clr-namespace:SimpleContacts"
+             mc:Ignorable="d"
+             x:Class="SimpleContacts.MainPage">
+    <d:ContentPage.BindingContext>
+        <local:ContactViewModel>
+            <x:Arguments>
+                <local:Contact Name="James Montemagno"
+                               Address="Microsoft Building 18"
+                               City="Redmond"
+                               Email="motz@microsoft.com"
+                               PhoneNumber="555-555-5555"
+                               State="WA"
+                               ZipCode="98052"/>
+            </x:Arguments>
+        </local:ContactViewModel>
+    </d:ContentPage.BindingContext>
+
+    <pancake:PancakeView BackgroundGradientStartColor="#3498db" BackgroundGradientEndColor="Transparent" >
+        <StackLayout Padding="24,48,24,24" >
+            <Frame HasShadow="False"
+                   HorizontalOptions="Center"
+                   Padding="0"
+                   WidthRequest="150"
+                   HeightRequest="150"
+                   CornerRadius="20"
+                   IsClippedToBounds="True">
+
+                <Image Source="james.jpeg"/>
+            </Frame>
+            <Label HorizontalOptions="Center"
+                   Text="{Binding Contact.Name}"/>
+        <Grid RowSpacing="8">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="44"/>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="44"/>
+            </Grid.ColumnDefinitions>
+
+            <!--Phone & SMS-->
+            <ImageButton Source="phone.png" Grid.Row="0" VerticalOptions="Center"
+                         Command="{Binding PhoneCommand}" BackgroundColor="Transparent" d:BackgroundColor=""/>
+            <Label Grid.Column="1" Grid.Row="0"
+                   VerticalOptions="Center"
+                   Text="{Binding Contact.PhoneNumber}"/>
+            <ImageButton Source="sms.png" Grid.Row="0" Grid.Column="2" VerticalOptions="Center"
+                         Command="{Binding SmsCommand}" BackgroundColor="Transparent" d:BackgroundColor=""/>
+            
+            <!--Email-->
+            <ImageButton Source="email.png" Grid.Row="1"  VerticalOptions="Center"
+                         Command="{Binding EmailCommand}" BackgroundColor="Transparent" d:BackgroundColor=""/>
+
+            <Label Grid.Column="1" Grid.Row="1"
+                   VerticalOptions="Center"
+                   Text="{Binding Contact.Email}"/>
+
+            <!--Address-->
+            <ImageButton Source="navigate.png" Grid.Row="2" VerticalOptions="Center"
+                         Command="{Binding NavigateCommand}" BackgroundColor="Transparent" d:BackgroundColor=""/>
+
+            <StackLayout Grid.Column="1" Grid.Row="2" VerticalOptions="Center">
+                <Label Text="{Binding Contact.Address}"/>
+                <Label>
+                    <Label.FormattedText>
+                        <FormattedString>
+                            <Span Text="{Binding Contact.City}"/>
+                            <Span Text=" "/>
+                            <Span Text="{Binding Contact.State}"/>
+                            <Span Text=", "/>
+                            <Span Text="{Binding Contact.ZipCode}"/>
+                        </FormattedString>
+                    </Label.FormattedText>
+                </Label>
+            </StackLayout>
+                   
+        </Grid>
+        </StackLayout>
+    </pancake:PancakeView>
+</ContentPage>
